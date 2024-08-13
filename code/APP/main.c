@@ -3,18 +3,12 @@
  *
  *  Created on: Aug 11, 2024
  *      Author: Tadros
+ *
+ *      MCU1
  */
 
-#include <avr/io.h>
-#include <util/delay.h>
-#include <avr/eeprom.h>
-#include <avr/interrupt.h>
+#include "main.h"
 
-#define normal_state 	 0
-#define emergency_state  1
-#define abnormal_state 	 2
-#define PWM_Fan_Pin		 PB3
-#define Fan_speed		 OCR0
 uint8_t current_state;
 uint8_t prev_state;
 
@@ -24,41 +18,38 @@ float prev_temp;
 uint8_t init = 0;
 
 
-void normalState(void);
-void emergencyState(void);
-void abnormalState(void);
-
-void setState(uint8_t temp);
-
-void timer1_init(void);
-void watchdog_init(void);
-
 int main(void)
 {
 	//Enable interrupts
 	sei();
 
-	//PWM init
+		//PWM init
 	//Set pin as output
 	DDRB |= (1<<PWM_Fan_Pin);
 	//Set timer0 as fast PWM, OCR0 non-inverting and prescaler = 8
 	TCCR0 |= (1<<WGM00) | (1<<WGM01) | (1 << COM01) | (1 << CS01);
 
-	//EEPROM
+		//ADC init
+	adc_init();
+		//EEPROM
 	current_state=eeprom_read_byte((uint8_t*)0x00);
+
 	if(current_state == abnormal_state)
 	{
 		abnormalState();
 	}
 
-	//current_temp=read ADC
+	current_temp = read_temperature();
 
 	eeprom_write_byte((uint8_t*)0x00,normal_state);
 
 	while(1)
 	{
-		//current_temp=read_ADC
+		current_temp = read_temperature();
+
+		uart_transmit(current_temp);
 		//send current_temp by uart
+
 		if( (current_temp != prev_temp) || (init==0) )
 		{
 			init=1;
@@ -78,6 +69,8 @@ int main(void)
 	return 0;
 }
 
+/******************************************************************************/
+
 void setState(uint8_t temp)
 {
 	if(current_state != prev_state)
@@ -94,8 +87,13 @@ void setState(uint8_t temp)
 		}
 	}
 }
+
+
+
 void normalState(void)
 {
+	eeprom_write_byte((uint8_t*)0x00,normal_state);
+
 	if(current_temp < 20)
 	{
 		//Stop fan
@@ -117,6 +115,8 @@ void normalState(void)
 	}
 }
 
+
+
 void emergencyState(void)
 {
 	eeprom_write_byte((uint8_t*)0x00,emergency_state);
@@ -130,6 +130,8 @@ void emergencyState(void)
 
 }
 
+
+
 void abnormalState(void)
 {
 	eeprom_write_byte((uint8_t*)0x00,abnormal_state);
@@ -137,40 +139,19 @@ void abnormalState(void)
 }
 
 
-void watchdog_init(void) {
-	//Disable interrupts
-    cli();
 
-    //Activate the watchdog timer with the smallest time to reset MCU1
-    WDTCR = (1 << WDE) | (1 << WDP0);
+float read_temperature(void) {
+    // Read ADC value from temperature sensor channel
+    uint16_t adc_value = read_temperature(); // Example: channel 0
 
-    //Enable interrupts
-    sei();
-}
-
-void timer1_init(void)
-{
-		//Set timer to CTC mode and prescaler to 64
-		TCCR1B |= (1 << WGM12) | (1 << CS11) | (1 << CS10);
-
-		//Compare value= ( (8MHz * 500ms)/64 ) -1
-		OCR2 = 62499;
-
-		//Enable Timer2 compare interrupt
-		TIMSK |= (1 << OCIE2);
+    // Convert ADC value to temperature (assuming a specific sensor)
+    // For example: 10mV/°C and 500mV offset, with 10-bit ADC
+    float voltage = adc_value * (5.0 / 1024.0);
+    float temperature = (voltage - 0.5) * 100;
+    return temperature;
 }
 
 
-void button_init(void) {
-    //Set PB0 as input
-    DDRB &= ~(1 << PB0);
-
-     // The falling edge of INT0 generates an interrupt request
-    MCUCR = (1 << ISC01);
-
-     //Enable external interrupt on INT0
-    GICR = (1 << INT0);
-}
 
 ISR(TIMER1_COMPA_vect) {
 	//current_temp=ADC_read
@@ -183,12 +164,14 @@ ISR(TIMER1_COMPA_vect) {
 		count++;
 }
 
+
+
 ISR(INT0_vect) {
 
-    //current_temp = ADCread
+    current_temp = read_temperature();
 
     if (current_temp >= 40 && current_temp <= 50) {
-        //send_shutdown_command();
+        uart_transmit('T');
     }
 }
 
