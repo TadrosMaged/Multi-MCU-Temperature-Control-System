@@ -1,30 +1,25 @@
 /*
  * adc.c
  *
- *  Created on: Aug 13, 2024
- *      Author: Dell
+ *  Created on: Oct 6, 2023
+ *      Author: Boutros
  */
-#include <avr/io.h>
+#include "../LIB/common_macros.h" /* To use the macros like SET_BIT */
 #include "adc.h"
-
-void adc_init(void) {
-    // Set ADC prescaler to 64
-    ADCSRA = (1 << ADPS2) | (1 << ADPS1);
-
-    // Set ADC reference voltage to AVcc
-    ADMUX = (1 << REFS0);
+#include <avr/io.h>
+void ADC_init(const ADC_ConfigType*Config_Ptr)
+{
+	ADMUX=(ADMUX&0x3F)|((Config_Ptr->ref_volt)<<6);
+	SET_BIT(ADCSRA,ADEN);
+	CLEAR_BIT(ADCSRA,ADIE);
+	ADCSRA=(ADCSRA&0xF8)|(Config_Ptr->prescaler);
 }
-
-uint16_t adc_read(uint8_t channel) {
-    // Select the channel
-    ADMUX = (ADMUX & 0xF0) | (channel & 0x0F);
-
-    // Start the conversion
-    ADCSRA |= (1 << ADSC);
-
-    // Wait for conversion to complete
-    while (ADCSRA & (1 << ADSC));
-
-    return ADC;
+uint16 ADC_readChannel(uint8 ch_num)
+{
+	ADMUX=(ADMUX&0xE0)|(ch_num&0x1F);
+	SET_BIT(ADCSRA,ADSC);
+	while(BIT_IS_CLEAR(ADCSRA,ADIF));
+	CLEAR_BIT(ADCSRA,ADIF);
+	return ADC;
 }
 

@@ -10,15 +10,19 @@
 
 void timer1_init(void)
 {
-		//Set timer to CTC mode and prescaler to 64
-		TCCR1B |= (1 << WGM12) | (1 << CS11) | (1 << CS10);
+    // Set Timer1 to CTC mode (WGM12 bit in TCCR1B)
+    TCCR1B |= (1 << WGM12);
 
-		//Compare value= ( (8MHz * 500ms)/64 ) -1
-		OCR2 = 62499;
+    // Set prescaler to 64 (CS11 and CS10 bits in TCCR1B)
+    TCCR1B |= (1 << CS11) | (1 << CS10);
 
-		//Enable Timer2 compare interrupt
-		TIMSK |= (1 << OCIE2);
+    // Set the compare value for 500ms delay: ( (8MHz * 0.5s)/64 ) - 1 = 62499
+    OCR1A = 62499;
+
+    // Enable Timer1 Compare Match A interrupt (OCIE1A bit in TIMSK)
+    TIMSK |= (1 << OCIE1A);
 }
+
 
 void watchdog_init(void) {
 	//Disable interrupts
