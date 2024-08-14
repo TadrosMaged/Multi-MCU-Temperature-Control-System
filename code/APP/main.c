@@ -154,24 +154,30 @@ float read_temperature(void) {
 
 
 ISR(TIMER1_COMPA_vect) {
-	//current_temp=ADC_read
 
+	current_temp = read_temperature();
+
+	if(current_temp > 50)
+	{
 		GPIO_writePin(PORTC_ID,PC2,LOGIC_HIGH);
 		_delay_ms(500);
 		GPIO_writePin(PORTC_ID,PC2,LOGIC_LOW);
 		_delay_ms(500);
 
-	if(count == 14)
-	{
-		eeprom_write_byte((uint8_t*)0x00,abnormal_state);
-		GPIO_writePin(PORTC_ID,PC0,LOGIC_LOW);
-		_delay_ms(2000);
-		GPIO_writePin(PORTC_ID,PC0,LOGIC_HIGH);
-		watchdog_init();
-		abnormalState();
+		if(count == 14)
+		{
+			eeprom_write_byte((uint8_t*)0x00,abnormal_state);
+			GPIO_writePin(PORTC_ID,PC0,LOGIC_LOW);
+			_delay_ms(2000);
+			GPIO_writePin(PORTC_ID,PC0,LOGIC_HIGH);
+			watchdog_init();
+			abnormalState();
+		}
+		else
+			count++;
 	}
 	else
-		count++;
+		timer1_deactivate();
 }
 
 
