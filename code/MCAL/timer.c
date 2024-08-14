@@ -24,6 +24,20 @@ void timer1_init(void)
 }
 
 
+void timer1_deactivate(void)
+{
+    // Disable Timer1 interrupts by clearing OCIE1A and OCIE1B (Compare Match A and B) and TOIE1 (Overflow Interrupt)
+    TIMSK &= ~( (1 << OCIE1A) | (1 << OCIE1B) | (1 << TOIE1) );
+
+    // Stop Timer1 by clearing the clock source bits in TCCR1B (CS12, CS11, and CS10)
+    TCCR1B &= ~( (1 << CS12) | (1 << CS11) | (1 << CS10) );
+
+    // Optionally reset Timer1 counter
+    TCNT1 = 0;
+}
+
+
+
 void watchdog_init(void) {
 	//Disable interrupts
     cli();

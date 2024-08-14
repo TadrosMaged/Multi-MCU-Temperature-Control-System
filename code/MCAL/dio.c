@@ -10,10 +10,10 @@
  *
  *******************************************************************************/
 
+#include "dio.h"
 #include "../LIB/common_macros.h" /* To use the macros like SET_BIT */
 #include "avr/io.h" /* To use the IO Ports Registers */
 #include"../LIB/std_types.h"
-#include "gpio.h"
 
 /*
  * Description :

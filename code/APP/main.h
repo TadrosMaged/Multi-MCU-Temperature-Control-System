@@ -14,8 +14,8 @@
 #include <avr/interrupt.h>
 
 #include "../MCAL/adc.h"
-#include "../MCAL/gpio.h"
 #include "../MCAL/timer.h"
+#include "../MCAL/dio.h"
 #include "../MCAL/uart.h"
 
 #define F_CPU 8000000UL

@@ -5,19 +5,19 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../code/MCAL/adc.c \
-../code/MCAL/gpio.c \
+../code/MCAL/dio.c \
 ../code/MCAL/timer.c \
 ../code/MCAL/uart.c 
 
 OBJS += \
 ./code/MCAL/adc.o \
-./code/MCAL/gpio.o \
+./code/MCAL/dio.o \
 ./code/MCAL/timer.o \
 ./code/MCAL/uart.o 
 
 C_DEPS += \
 ./code/MCAL/adc.d \
-./code/MCAL/gpio.d \
+./code/MCAL/dio.d \
 ./code/MCAL/timer.d \
 ./code/MCAL/uart.d 
 
