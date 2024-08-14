@@ -11,7 +11,7 @@ d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_fixunssfs
 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_addsub_sf.o)
                               ./code/APP/main.o (__subsf3)
 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_mul_sf.o)
-                              ./code/APP/main.o (__mulsf3)
+                              ./code/HAL/temp_sensor.o (__mulsf3)
 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_div_sf.o)
                               ./code/APP/main.o (__divsf3)
 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_gt_sf.o)
@@ -27,7 +27,7 @@ d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_sf_to_si.
 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_thenan_sf.o)
                               d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_addsub_sf.o) (__thenan_sf)
 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_usi_to_sf.o)
-                              ./code/APP/main.o (__floatunsisf)
+                              ./code/HAL/temp_sensor.o (__floatunsisf)
 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
                               d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_addsub_sf.o) (__prologue_saves__)
 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
@@ -66,6 +66,8 @@ LOAD ./code/MCAL/dio.o
 LOAD ./code/MCAL/interrupt.o
 LOAD ./code/MCAL/timer.o
 LOAD ./code/MCAL/uart.o
+LOAD ./code/HAL/dc_motor.o
+LOAD ./code/HAL/temp_sensor.o
 LOAD ./code/APP/main.o
 LOAD d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 LOAD d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a
@@ -161,7 +163,7 @@ LOAD d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x21f6
+.text           0x00000000     0x2200
  *(.vectors)
  .vectors       0x00000000       0x54 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
                 0x00000000                __vectors
@@ -241,6 +243,8 @@ LOAD d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  .text          0x00000092        0x0 ./code/MCAL/interrupt.o
  .text          0x00000092        0x0 ./code/MCAL/timer.o
  .text          0x00000092        0x0 ./code/MCAL/uart.o
+ .text          0x00000092        0x0 ./code/HAL/dc_motor.o
+ .text          0x00000092        0x0 ./code/HAL/temp_sensor.o
  .text          0x00000092        0x0 ./code/APP/main.o
  .text          0x00000092        0x0 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
  .text          0x00000092        0x0 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
@@ -330,48 +334,48 @@ LOAD d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  .text.uart_receive
                 0x0000173a       0x1e ./code/MCAL/uart.o
                 0x0000173a                uart_receive
- .text.main     0x00001758      0x314 ./code/APP/main.o
-                0x00001758                main
- .text.setState
-                0x00001a6c       0x52 ./code/APP/main.o
-                0x00001a6c                setState
- .text.normalState
-                0x00001abe      0x16e ./code/APP/main.o
-                0x00001abe                normalState
- .text.emergencyState
-                0x00001c2c       0x2e ./code/APP/main.o
-                0x00001c2c                emergencyState
- .text.abnormalState
-                0x00001c5a       0x20 ./code/APP/main.o
-                0x00001c5a                abnormalState
  .text.read_temperature
-                0x00001c7a       0x8e ./code/APP/main.o
-                0x00001c7a                read_temperature
+                0x00001758       0x8e ./code/HAL/temp_sensor.o
+                0x00001758                read_temperature
+ .text.main     0x000017e6      0x314 ./code/APP/main.o
+                0x000017e6                main
+ .text.setState
+                0x00001afa       0x52 ./code/APP/main.o
+                0x00001afa                setState
+ .text.normalState
+                0x00001b4c      0x16e ./code/APP/main.o
+                0x00001b4c                normalState
+ .text.emergencyState
+                0x00001cba       0x2e ./code/APP/main.o
+                0x00001cba                emergencyState
+ .text.abnormalState
+                0x00001ce8       0x20 ./code/APP/main.o
+                0x00001ce8                abnormalState
  .text.__vector_7
-                0x00001d08      0x39c ./code/APP/main.o
+                0x00001d08      0x3a6 ./code/APP/main.o
                 0x00001d08                __vector_7
  .text.__vector_1
-                0x000020a4       0xb6 ./code/APP/main.o
-                0x000020a4                __vector_1
- .text.libgcc   0x0000215a        0x0 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
- .text.libgcc   0x0000215a        0x0 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
- .text.libgcc   0x0000215a        0x0 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
- .text.libgcc   0x0000215a       0x38 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
-                0x0000215a                __prologue_saves__
- .text.libgcc   0x00002192       0x36 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
-                0x00002192                __epilogue_restores__
+                0x000020ae       0xb6 ./code/APP/main.o
+                0x000020ae                __vector_1
+ .text.libgcc   0x00002164        0x0 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .text.libgcc   0x00002164        0x0 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+ .text.libgcc   0x00002164        0x0 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+ .text.libgcc   0x00002164       0x38 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
+                0x00002164                __prologue_saves__
+ .text.libgcc   0x0000219c       0x36 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
+                0x0000219c                __epilogue_restores__
  .text.avr-libc
-                0x000021c8       0x10 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(eerd_byte_atmega32.o)
-                0x000021c8                __eerd_byte_m32
+                0x000021d2       0x10 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(eerd_byte_atmega32.o)
+                0x000021d2                __eerd_byte_m32
  .text.avr-libc
-                0x000021d8       0x1a d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(eewr_byte_atmega32.o)
-                0x000021da                __eewr_r18_m32
-                0x000021d8                __eewr_byte_m32
-                0x000021f2                . = ALIGN (0x2)
+                0x000021e2       0x1a d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(eewr_byte_atmega32.o)
+                0x000021e4                __eewr_r18_m32
+                0x000021e2                __eewr_byte_m32
+                0x000021fc                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000021f2        0x0 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
-                0x000021f2                exit
-                0x000021f2                _exit
+ .fini9         0x000021fc        0x0 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+                0x000021fc                exit
+                0x000021fc                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -390,11 +394,11 @@ LOAD d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000021f2        0x4 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .fini0         0x000021fc        0x4 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x000021f6                _etext = .
+                0x00002200                _etext = .
 
-.data           0x00800060      0x10a load address 0x000021f6
+.data           0x00800060      0x10a load address 0x00002200
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800060        0x0 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
@@ -403,6 +407,8 @@ LOAD d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  .data          0x00800060        0x0 ./code/MCAL/interrupt.o
  .data          0x00800060        0x0 ./code/MCAL/timer.o
  .data          0x00800060        0x0 ./code/MCAL/uart.o
+ .data          0x00800060        0x0 ./code/HAL/dc_motor.o
+ .data          0x00800060        0x0 ./code/HAL/temp_sensor.o
  .data          0x00800060        0x0 ./code/APP/main.o
  .data          0x00800060        0x0 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
  .data          0x00800060        0x0 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
@@ -449,6 +455,8 @@ LOAD d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  .bss           0x0080016a        0x0 ./code/MCAL/interrupt.o
  .bss           0x0080016a        0x0 ./code/MCAL/timer.o
  .bss           0x0080016a        0x0 ./code/MCAL/uart.o
+ .bss           0x0080016a        0x0 ./code/HAL/dc_motor.o
+ .bss           0x0080016a        0x0 ./code/HAL/temp_sensor.o
  .bss           0x0080016a        0x0 ./code/APP/main.o
  .bss           0x0080016a        0x0 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
  .bss           0x0080016a        0x0 d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
@@ -482,8 +490,8 @@ LOAD d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
                 0x0080016b                current_temp
  *(COMMON)
                 0x0080016f                PROVIDE (__bss_end, .)
-                0x000021f6                __data_load_start = LOADADDR (.data)
-                0x00002300                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00002200                __data_load_start = LOADADDR (.data)
+                0x0000230a                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x0080016f        0x0
                 0x0080016f                PROVIDE (__noinit_start, .)
@@ -508,7 +516,7 @@ LOAD d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .signature
  *(.signature*)
 
-.stab           0x00000000     0x1b24
+.stab           0x00000000     0x1e0c
  *(.stab)
  .stab          0x00000000      0x48c ./code/MCAL/adc.o
  .stab          0x0000048c      0x624 ./code/MCAL/dio.o
@@ -519,12 +527,16 @@ LOAD d:/programs/avr-gcc/avr_cdrive/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
                                 0x3e4 (size before relaxing)
  .stab          0x00000e40      0x21c ./code/MCAL/uart.o
                                 0x3d8 (size before relaxing)
- .stab          0x0000105c      0xac8 ./code/APP/main.o
-                                0xc84 (size before relaxing)
+ .stab          0x0000105c       0xd8 ./code/HAL/dc_motor.o
+                                 0xe4 (size before relaxing)
+ .stab          0x00001134      0x294 ./code/HAL/temp_sensor.o
+                                0x450 (size before relaxing)
+ .stab          0x000013c8      0xa44 ./code/APP/main.o
+                                0xc00 (size before relaxing)
 
-.stabstr        0x00000000     0x117a
+.stabstr        0x00000000     0x13d6
  *(.stabstr)
- .stabstr       0x00000000     0x117a ./code/MCAL/adc.o
+ .stabstr       0x00000000     0x13d6 ./code/MCAL/adc.o
 
 .stab.excl
  *(.stab.excl)

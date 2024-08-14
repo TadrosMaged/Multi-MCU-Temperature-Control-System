@@ -23,7 +23,7 @@ int main(void)
 	//Set PWM pin as output
 	GPIO_setupPinDirection(PORTB_ID,PB3,PIN_OUTPUT);
 
-	//Set timer0 as fast PWM, OCR0 non-inverting and prescaler = 8
+	//Set timer0 as fast PWM, OCR0 non-inverting and prescaler = 64
 	timer0_init();
 
 	//ADC init
@@ -140,16 +140,7 @@ void abnormalState(void)
 
 
 
-float read_temperature(void) {
 
-	//Read ADC value from
-	uint16_t adc_value = ADC_readChannel(0);
-
-	//Convert ADC value to temperature
-	float voltage = adc_value * (5.0 / 1024.0);
-	float temperature = voltage*100;
-	return temperature;
-}
 
 
 
@@ -177,7 +168,10 @@ ISR(TIMER1_COMPA_vect) {
 			count++;
 	}
 	else
+	{
+		GPIO_writePin(PORTC_ID,PC0,LOGIC_LOW);
 		timer1_deactivate();
+	}
 }
 
 

@@ -18,13 +18,16 @@
 #include "../MCAL/dio.h"
 #include "../MCAL/uart.h"
 
+#include "../HAL/dc_motor.h"
+#include "../HAL/temp_sensor.h"
+
 #define F_CPU 8000000UL
 
 #define normal_state 	 0
 #define emergency_state  1
 #define abnormal_state 	 2
 #define PWM_Fan_Pin		 PB3
-#define Fan_speed		 OCR0
+#define Fan_speed		 motor_speed
 
 
 float read_temperature(void);
