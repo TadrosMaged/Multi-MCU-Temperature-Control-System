@@ -47,12 +47,12 @@ int main(void)
 	GPIO_setupPinDirection(PORTC_ID,PC1,PIN_OUTPUT);
 	GPIO_setupPinDirection(PORTC_ID,PC2,PIN_OUTPUT);
 
-	for(int i=0;i<=2;i++)
+	for(int i=0;i<2;i++)
 	{
 		GPIO_writePin(PORTC_ID,PC1,LOGIC_HIGH);
-		_delay_ms(1000);
+		_delay_ms(100);
 		GPIO_writePin(PORTC_ID,PC1,LOGIC_LOW);
-		_delay_ms(1000);
+		_delay_ms(100);
 	}
 
 

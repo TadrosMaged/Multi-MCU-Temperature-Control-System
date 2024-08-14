@@ -3599,7 +3599,7 @@ int main(void)
     1846:	41 e0       	ldi	r20, 0x01	; 1
     1848:	0e 94 b4 07 	call	0xf68	; 0xf68 <GPIO_setupPinDirection>
 
-	for(int i=0;i<=2;i++)
+	for(int i=0;i<2;i++)
     184c:	1e 8e       	std	Y+30, r1	; 0x1e
     184e:	1d 8e       	std	Y+29, r1	; 0x1d
     1850:	f3 c0       	rjmp	.+486    	; 0x1a38 <main+0x252>
@@ -3611,8 +3611,8 @@ int main(void)
     1858:	0e 94 9f 08 	call	0x113e	; 0x113e <GPIO_writePin>
     185c:	80 e0       	ldi	r24, 0x00	; 0
     185e:	90 e0       	ldi	r25, 0x00	; 0
-    1860:	aa e7       	ldi	r26, 0x7A	; 122
-    1862:	b4 e4       	ldi	r27, 0x44	; 68
+    1860:	a8 ec       	ldi	r26, 0xC8	; 200
+    1862:	b2 e4       	ldi	r27, 0x42	; 66
     1864:	89 8f       	std	Y+25, r24	; 0x19
     1866:	9a 8f       	std	Y+26, r25	; 0x1a
     1868:	ab 8f       	std	Y+27, r26	; 0x1b
@@ -3752,7 +3752,7 @@ _delay_loop_2(uint16_t __count)
     193a:	f1 f7       	brne	.-4      	; 0x1938 <main+0x152>
     193c:	98 8b       	std	Y+16, r25	; 0x10
     193e:	8f 87       	std	Y+15, r24	; 0x0f
-		_delay_ms(1000);
+		_delay_ms(100);
 		GPIO_writePin(PORTC_ID,PC1,LOGIC_LOW);
     1940:	82 e0       	ldi	r24, 0x02	; 2
     1942:	61 e0       	ldi	r22, 0x01	; 1
@@ -3760,8 +3760,8 @@ _delay_loop_2(uint16_t __count)
     1946:	0e 94 9f 08 	call	0x113e	; 0x113e <GPIO_writePin>
     194a:	80 e0       	ldi	r24, 0x00	; 0
     194c:	90 e0       	ldi	r25, 0x00	; 0
-    194e:	aa e7       	ldi	r26, 0x7A	; 122
-    1950:	b4 e4       	ldi	r27, 0x44	; 68
+    194e:	a8 ec       	ldi	r26, 0xC8	; 200
+    1950:	b2 e4       	ldi	r27, 0x42	; 66
     1952:	8b 87       	std	Y+11, r24	; 0x0b
     1954:	9c 87       	std	Y+12, r25	; 0x0c
     1956:	ad 87       	std	Y+13, r26	; 0x0d
@@ -3900,7 +3900,7 @@ _delay_ms(double __ms)
 	GPIO_setupPinDirection(PORTC_ID,PC1,PIN_OUTPUT);
 	GPIO_setupPinDirection(PORTC_ID,PC2,PIN_OUTPUT);
 
-	for(int i=0;i<=2;i++)
+	for(int i=0;i<2;i++)
     1a2e:	8d 8d       	ldd	r24, Y+29	; 0x1d
     1a30:	9e 8d       	ldd	r25, Y+30	; 0x1e
     1a32:	01 96       	adiw	r24, 0x01	; 1
@@ -3908,7 +3908,7 @@ _delay_ms(double __ms)
     1a36:	8d 8f       	std	Y+29, r24	; 0x1d
     1a38:	8d 8d       	ldd	r24, Y+29	; 0x1d
     1a3a:	9e 8d       	ldd	r25, Y+30	; 0x1e
-    1a3c:	83 30       	cpi	r24, 0x03	; 3
+    1a3c:	82 30       	cpi	r24, 0x02	; 2
     1a3e:	91 05       	cpc	r25, r1
     1a40:	0c f4       	brge	.+2      	; 0x1a44 <main+0x25e>
     1a42:	07 cf       	rjmp	.-498    	; 0x1852 <main+0x6c>
