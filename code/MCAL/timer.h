@@ -8,6 +8,7 @@
 #ifndef CODE_MCAL_TIMER_H_
 #define CODE_MCAL_TIMER_H_
 
+void timer0_init(void);
 void timer1_init(void);
 void timer1_deactivate(void);
 void watchdog_init(void);

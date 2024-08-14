@@ -24,7 +24,7 @@ int main(void)
 	GPIO_setupPinDirection(PORTB_ID,PB3,PIN_OUTPUT);
 
 	//Set timer0 as fast PWM, OCR0 non-inverting and prescaler = 8
-	TCCR0 |= (1<<WGM00) | (1<<WGM01) | (1 << COM01) | (1 << CS01);
+	timer0_init();
 
 	//ADC init
 	ADC_ConfigType config={
@@ -184,5 +184,3 @@ ISR(INT0_vect) {
 		uart_transmit('T');
 	}
 }
-
-

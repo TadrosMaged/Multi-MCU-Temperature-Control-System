@@ -6,18 +6,21 @@
 C_SRCS += \
 ../code/MCAL/adc.c \
 ../code/MCAL/dio.c \
+../code/MCAL/interrupt.c \
 ../code/MCAL/timer.c \
 ../code/MCAL/uart.c 
 
 OBJS += \
 ./code/MCAL/adc.o \
 ./code/MCAL/dio.o \
+./code/MCAL/interrupt.o \
 ./code/MCAL/timer.o \
 ./code/MCAL/uart.o 
 
 C_DEPS += \
 ./code/MCAL/adc.d \
 ./code/MCAL/dio.d \
+./code/MCAL/interrupt.d \
 ./code/MCAL/timer.d \
 ./code/MCAL/uart.d 
 

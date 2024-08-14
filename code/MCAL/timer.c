@@ -8,6 +8,11 @@
 #include <avr/interrupt.h>
 #include "timer.h"
 
+void timer0_init(void)
+{
+	TCCR0 |= (1<<WGM00) | (1<<WGM01) | (1 << COM01) | (1 << CS01);
+}
+
 void timer1_init(void)
 {
     // Set Timer1 to CTC mode (WGM12 bit in TCCR1B)
