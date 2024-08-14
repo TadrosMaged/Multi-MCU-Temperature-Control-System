@@ -1,3 +1,4 @@
+
 /*
  * main.c
  *
@@ -32,6 +33,10 @@ int main(void)
 	};
 
 	ADC_init(&config);
+
+	//UART init
+	uart_init();
+
 
 	Fan_speed=0;
 
@@ -107,7 +112,7 @@ void normalState(void)
 	else if(current_temp >= 20 && current_temp < 40)
 	{
 		//Set fan speed corresponding to temp
-		Fan_speed=((current_temp-20)/20)*255;
+		Fan_speed=((current_temp-20)/20) * 255;
 	}
 	else if(current_temp >= 40 && current_temp <= 50)
 	{
