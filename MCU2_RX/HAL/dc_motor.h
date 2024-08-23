@@ -2,7 +2,7 @@
  * dc_motor.h
  *
  *  Created on: Aug 14, 2024
- *      Author: Dell
+ *      Author: Tadros Maged
  */
 
 #ifndef CODE_HAL_DC_MOTOR_H_

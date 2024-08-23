@@ -2,7 +2,7 @@
  * main.c
  *
  *  Created on: Aug 11, 2024
- *      Author: Tadros
+ *      Author: Tadros Maged
  *
  *      MCU1
  */
@@ -50,12 +50,12 @@ int main(void)
 
 	set_speed(0);
 
+	set_angle(0);
+
 	//LED pins set to O/P
 	GPIO_setupPinDirection(PORTC_ID,PC0,PIN_OUTPUT);
 	GPIO_setupPinDirection(PORTC_ID,PC1,PIN_OUTPUT);
 	GPIO_setupPinDirection(PORTC_ID,PC2,PIN_OUTPUT);
-
-	GPIO_setupPinDirection(PORTC_ID,PC3,PIN_OUTPUT);
 
 	//Buzzer pin set to O/P
 	GPIO_setupPinDirection(PORTB_ID,PB0,PIN_OUTPUT);
@@ -82,32 +82,32 @@ ISR(USART_RXC_vect) {
 		normalState();
 	}
 	else if(strcmp((char*)receivedMessage, "y") == 0)
-		{
-			state='y';
-			normalState();
-		}
+	{
+		state='y';
+		normalState();
+	}
 	else if(strcmp((char*)receivedMessage, "r") == 0)
-		{
-			state='r';
-			normalState();
-		}
+	{
+		state='r';
+		normalState();
+	}
 	else if(strcmp((char*)receivedMessage, "e") == 0)
-		{
-			state='e';
-			emergencyState();
-		}
+	{
+		state='e';
+		emergencyState();
+	}
 	else if(strcmp((char*)receivedMessage, "a") == 0)
-			{
-				state='a';
-				abnormalState();
-			}
+	{
+		state='a';
+		abnormalState();
+	}
 	else if(strcmp((char*)receivedMessage, "s") == 0)
-			{
-				state='s';
-				shutdown();
-			}
+	{
+		state='s';
+		shutdown();
+	}
 
-sei();
+	sei();
 }
 
 
@@ -186,17 +186,27 @@ void abnormalState(void)
 
 void shutdown(void)
 {
-	set_right_angle();
-
 	set_speed(0);
-	_delay_ms(1000);
-	/*function supposed to check if condition changed but time ran up*/
-	/*
-	while(state='r')
-		{
 
+	set_angle(90);
+
+	//Turn all leds off
+	GPIO_writePin(PORTC_ID,PC0,LOGIC_LOW);
+	GPIO_writePin(PORTC_ID,PC1,LOGIC_LOW);
+	GPIO_writePin(PORTC_ID,PC2,LOGIC_LOW);
+
+
+	while(1)
+	{
+		UART_receiveString(receivedMessage);
+
+		if(strcmp((char*)receivedMessage, "r") != 0 && strcmp((char*)receivedMessage, "s") != 0)
+		{
+			break;
 		}
-		*/
+	}
+
+	set_angle(0);
 
 }
 

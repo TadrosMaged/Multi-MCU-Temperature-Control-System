@@ -28,8 +28,6 @@ void timer1_init(void)
     // Set ICR1 value to define PWM frequency
     ICR1 = 19999; // for 50Hz PWM frequency
 
-    // Set initial servo position to middle
-    OCR1A = 0; // 1.5ms pulse width for 0 degrees
 }
 
 

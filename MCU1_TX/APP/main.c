@@ -54,9 +54,6 @@ int main(void)
 	//Read state from EEPROM
 	current_state=eeprom_read_byte((uint8_t*)0x00);
 
-	//Testing led for debugging
-	GPIO_setupPinDirection(PORTC_ID,PC2,PIN_OUTPUT);
-
 
 
 	if(current_state == abnormal_state)
@@ -65,6 +62,9 @@ int main(void)
 	}
 
 	current_state=normal_state;
+
+	//Initial delay for proteus software to read temperature sensor correctly
+	_delay_ms(250);
 
 	while(1)
 	{
@@ -177,18 +177,11 @@ ISR(TIMER1_COMPA_vect) {
 
 	if(current_temp > 50)
 	{
-		GPIO_writePin(PORTC_ID,PC2,LOGIC_HIGH);
-		_delay_ms(100);
-		GPIO_writePin(PORTC_ID,PC2,LOGIC_LOW);
-		_delay_ms(100);
 
 		if(count == 14)
 		{
 			eeprom_write_byte((uint8_t*)0x00,abnormal_state);
 
-			GPIO_writePin(PORTC_ID,PC0,LOGIC_LOW);
-			_delay_ms(2000);
-			GPIO_writePin(PORTC_ID,PC0,LOGIC_HIGH);
 
 			watchdog_init();
 			abnormalState();
@@ -198,9 +191,9 @@ ISR(TIMER1_COMPA_vect) {
 	}
 	else
 	{
-		GPIO_writePin(PORTC_ID,PC0,LOGIC_LOW);
 		timer1_deactivate();
 	}
+
 }
 
 
